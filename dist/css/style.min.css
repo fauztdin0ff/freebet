@@ -571,6 +571,7 @@ main {
   letter-spacing: -0.05em;
   text-transform: uppercase;
   text-align: center;
+  font-style: italic;
   margin-bottom: 46.48px;
   font-size: calc(27px + 40.49 * ((100vw - 320px) / 1600));
 }
