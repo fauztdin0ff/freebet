@@ -27,18 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
    const wincardBc = document.querySelector('.freebet__wincard-bc');
    const wincardLink = document.querySelector('.freebet__wincard-link a');
    const items = document.querySelectorAll('.freebet__items .freebet__item');
-   const freebetBody = document.querySelector('.freebet__body'); // контейнер
+   const freebetBody = document.querySelector('.freebet__body');
 
    function getAllBookmakers() {
       return Array.from(items).map(item => item.dataset.bc);
    }
 
    function getSelection() {
-      let selected = [];
-      checkboxes.forEach(cb => {
-         if (cb.checked) selected.push(cb.value);
-      });
-      return selected;
+      return Array.from(checkboxes)
+         .filter(cb => cb.checked)
+         .map(cb => cb.value);
    }
 
    function showFreebets(selection) {
@@ -51,7 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (top4.length > 0) {
          const winItem = document.querySelector(`.freebet__item[data-bc="${top4[0]}"]`);
          if (winItem) {
-            wincardBc.textContent = winItem.querySelector('.freebet__item-bc').textContent.trim();
+            // логотип
+            const logo = winItem.dataset.logo || "";
+            const alt = winItem.querySelector(".freebet__item-bc img")?.alt || "bc";
+            wincardBc.innerHTML = `<img src="${logo}" alt="${alt}">`;
+
+            // ссылка
             wincardLink.href = winItem.querySelector('a').href;
          }
 
@@ -78,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
          });
       }, 1000);
    }
-
 
    btnPick.addEventListener("click", () => {
       let selected = getSelection();
